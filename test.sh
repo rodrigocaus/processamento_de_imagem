@@ -5,9 +5,9 @@ PASTA_SAIDA=imgs_out
 EXTENSAO=elf
 
 printf "Entrada\t\t"
-printf "Resolução\t"
-printf "Procedimento\t"
-printf "Numero de T/P\t"
+printf "Resolução\t\t"
+printf "Procedimento\t\t"
+printf "Numero de T/P\t\t"
 printf "Tempo de operação (ms)\n"
 
 for m in $(ls *.$EXTENSAO);
