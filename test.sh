@@ -3,6 +3,7 @@
 PASTA_ENTRADA=imgs_test
 PASTA_SAIDA=imgs_out
 EXTENSAO=elf
+IMG_EXT=jpg
 
 printf "Entrada\t\t"
 printf "Resolução\t\t"
@@ -18,6 +19,6 @@ do
 		out=${img%.*}
 		processo=${m%.*}
 		processo=${processo#main}
-		./$m $PASTA_ENTRADA/$img $PASTA_SAIDA/$out$processo.jpg
+		./$m $PASTA_ENTRADA/$img $PASTA_SAIDA/$out$processo.$IMG_EXT
 	done
 done
