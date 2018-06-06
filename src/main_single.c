@@ -8,15 +8,11 @@
 #define ORDEM 3
 #define NTHREADS 1
 
-float blur[ORDEM][ORDEM] = {
-							{1.0/9.0, 1.0/9.0, 1.0/9.0},
-							{1.0/9.0, 1.0/9.0, 1.0/9.0},
-							{1.0/9.0, 1.0/9.0, 1.0/9.0}
-						   };
-
-void copia_imagem(imagem *i, imagem *o);
 
 int main(int argc, char **argv) {
+
+	float **blur;
+
 	if(argc < 3) {
 		fprintf(stderr, "Faltam argumentos!\n");
 		return argc;
@@ -28,12 +24,14 @@ int main(int argc, char **argv) {
 
 	saida = inicializa_saida(&entrada);
 
+	cria_blur(&blur, ORDEM);
+
 	clock_t t0, t1;
 	t0 = clock();
 	aplica_filtro_single(&entrada, &saida, (float **)blur, ORDEM);
-	copia_imagem(&entrada, &saida);
-	salvar_imagem(argv[2], &saida);
 	t1 = clock();
+
+	salvar_imagem(argv[2], &saida);
 
 	printf("%s \t\t", argv[1]);
 	printf("%ux%u \t\t", entrada.width, entrada.height);
@@ -43,16 +41,7 @@ int main(int argc, char **argv) {
 
 	liberar_imagem(&entrada);
 	liberar_imagem(&saida);
+	limpa_filtro(blur);
 
 	return 0;
-}
-
-void copia_imagem(imagem *I, imagem *O) {
-	for(int i = 0; i < I->height; i++) {
-		for(int j = 0; j < I->width; j++) {
-			O->r[i][j] = I->r[i][j];
-			O->g[i][j] = I->g[i][j];
-			O->b[i][j] = I->b[i][j];
-		}
-	}
 }
