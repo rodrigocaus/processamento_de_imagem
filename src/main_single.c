@@ -11,7 +11,8 @@
 
 int main(int argc, char **argv) {
 
-	float **blur;
+	//float **blur;
+	float ** emboss;
 
 	if(argc < 3) {
 		fprintf(stderr, "Faltam argumentos!\n");
@@ -24,11 +25,13 @@ int main(int argc, char **argv) {
 
 	saida = inicializa_saida(&entrada);
 
-	cria_blur(&blur, ORDEM);
+	//cria_blur(&blur, ORDEM);
+	cria_emboss(&emboss);
 
 	clock_t t0, t1;
 	t0 = clock();
-	aplica_filtro_single(&entrada, &saida, (float **)blur, ORDEM);
+	//aplica_filtro_single(&entrada, &saida, (float **)blur, ORDEM);
+	aplica_filtro_single(&entrada, &saida, (float **)emboss, ORDEM);
 	t1 = clock();
 
 	salvar_imagem(argv[2], &saida);
@@ -41,7 +44,8 @@ int main(int argc, char **argv) {
 
 	liberar_imagem(&entrada);
 	liberar_imagem(&saida);
-	limpa_filtro(blur);
+	//limpa_filtro(blur);
+	limpa_filtro(emboss);
 
 	return 0;
 }

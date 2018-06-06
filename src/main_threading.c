@@ -6,13 +6,11 @@
 #include "filter.h"
 
 #define ORDEM 3
-#define NTHREADS 1
-
-float blur[ORDEM][ORDEM] = {1.0/9.0, 1.0/9.0, 1.0/9.0,
-							1.0/9.0, 1.0/9.0, 1.0/9.0,
-							1.0/9.0, 1.0/9.0, 1.0/9.0};
+#define NTHREADS 4
 
 int main(int argc, char **argv) {
+	float ** emboss;
+
 	if(argc < 3) {
 		fprintf(stderr, "Faltam argumentos!\n");
 		return argc;
@@ -23,14 +21,15 @@ int main(int argc, char **argv) {
 		return 1;
 
 	saida = inicializa_saida(&entrada);
+	cria_emboss(&emboss);
 
 	clock_t t0, t1;
 	t0 = clock();
 
-	// TODO aplicar filtro
-
-	salvar_imagem(argv[2], &saida);
+	aplica_filtro_threading(&entrada, &saida, (float **)emboss, ORDEM , NTHREADS);
 	t1 = clock();
+	salvar_imagem(argv[2], &saida);
+	
 
 	printf("%s \t\t", argv[1]);
 	printf("%ux%u \t\t", entrada.width, entrada.height);
@@ -40,6 +39,7 @@ int main(int argc, char **argv) {
 
 	liberar_imagem(&entrada);
 	liberar_imagem(&saida);
+	limpa_filtro(emboss);
 
 	return 0;
 }
