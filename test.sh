@@ -5,6 +5,8 @@ PASTA_SAIDA=imgs_out
 EXTENSAO=elf
 IMG_EXT=jpg
 
+mkdir $PASTA_SAIDA
+
 printf "Entrada\t\t"
 printf "Resolução\t\t"
 printf "Procedimento\t\t"
