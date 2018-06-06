@@ -36,7 +36,7 @@ imagem inicializa_saida(imagem *I) {
 	return saida;
 }
 
-void aplica_filtro(imagem *I, imagem *O, float **filtro, int ordem) {
+void aplica_filtro_single(imagem *I, imagem *O, float **filtro, int ordem) {
 	
     //Temp Red, Temp Green e Temp Blue : Acumuladores usados durante a convolucao
     float tr, tg, tb;

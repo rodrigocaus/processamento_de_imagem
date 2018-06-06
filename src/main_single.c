@@ -26,7 +26,7 @@ int main(int argc, char **argv) {
 
 	clock_t t0, t1;
 	t0 = clock();
-	aplica_filtro(&entrada, &saida, (float **)blur, ORDEM);
+	aplica_filtro_single(&entrada, &saida, (float **)blur, ORDEM);
 	salvar_imagem(argv[2], &saida);
 	t1 = clock();
 
