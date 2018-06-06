@@ -124,7 +124,49 @@ void aplica_filtro_single(imagem *I, imagem *O, float **filtro, int ordem) {
 
 void aplica_filtro_thread(imagem *I, imagem *O, float **filtro, int ordem, int n_thread) {
     
-    
+    //Aloca o vetor de threads
+   	pthread_t threads = (pthread_t *) malloc(sizeof(pthread_t) * n_thread);
+
+   	//Aloca o vetor de ponteiros de struct de argumentos para as threads
+   	area_trab **args = malloc(sizeof (* area_trab) * n_thread);
+
+   	int n_linhas = I->height;
+   	int linha_ant = -1;
+   	int div = n_linhas/n_thread;
+
+    //Realiza a divisao das linhas entre as threads
+    //Faz as chamadas dos workers
+    for(int i=0 ; i < n_thread ; i++)
+    {
+    	//Aloca o ponteiro para a struct de argumentos
+    	args[i] = (area_trab *) malloc(sizeof (area_trab));
+
+    	//Define os as linhas limite de trabalho para as threads
+    	//Linha inicial eh a proxima apos o fim da area de trabalho anterior
+    	(args[i])->l_ini = linha_ant + 1;
+
+    	//Se for a ultima thread, pega ate o fim
+    	//Se nao for, pega ate o multiplo de divisao
+    	if(i == n_thread-1) {(args[i])->l_fim = n_linhas - 1;}
+    	else {(args[i])->l_fim = (i+1) * div;}
+
+    	//Atualiza a linha anterior
+    	linha_ant = (args[i])->l_fim ;
+
+    	//Cria a thread
+    	pthread_create(&threads[i], NULL, thread_worker, args[i]);
+    }
+
+    // Esperando threads
+  	for (int i = 0; i < n_thread; i++) 
+  	{
+    	pthread_join(threads[i], NULL);
+	}
+
+   	//Libera o vetor de threads e a struct de argumentos
+   	free(threads);
+   	free(args);
+
 
     return;
 }
