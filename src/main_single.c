@@ -8,19 +8,13 @@
 #define ORDEM 3
 #define NTHREADS 1
 
-<<<<<<< HEAD
 float blur[ORDEM][ORDEM] = {
 							{1.0/9.0, 1.0/9.0, 1.0/9.0},
 							{1.0/9.0, 1.0/9.0, 1.0/9.0},
 							{1.0/9.0, 1.0/9.0, 1.0/9.0}
 						   };
-=======
-void copia_imagem(imagem *i, imagem *o);
 
-float blur[ORDEM][ORDEM] = {1.0/9.0, 1.0/9.0, 1.0/9.0,
-							1.0/9.0, 1.0/9.0, 1.0/9.0,
-							1.0/9.0, 1.0/9.0, 1.0/9.0};
->>>>>>> 7efe20dd8ed3464447b8bd15d9c93fd43fe75987
+void copia_imagem(imagem *i, imagem *o);
 
 int main(int argc, char **argv) {
 	if(argc < 3) {
@@ -36,7 +30,7 @@ int main(int argc, char **argv) {
 
 	clock_t t0, t1;
 	t0 = clock();
-	//aplica_filtro_single(&entrada, &saida, (float **)blur, ORDEM);
+	aplica_filtro_single(&entrada, &saida, (float **)blur, ORDEM);
 	copia_imagem(&entrada, &saida);
 	salvar_imagem(argv[2], &saida);
 	t1 = clock();
