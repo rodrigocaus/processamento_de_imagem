@@ -30,10 +30,10 @@ int main(int argc, char **argv) {
 	salvar_imagem(argv[2], &saida);
 	t1 = clock();
 
-	printf("%s\t", argv[1]);
-	printf("%ux%u\t", entrada.width, entrada.height);
-	printf("%s\t", "Simples");
-	printf("%u\t", NTHREADS);
+	printf("%s\t\t", argv[1]);
+	printf("%ux%u\t\t", entrada.width, entrada.height);
+	printf("%s\t\t", "Simples");
+	printf("%u\t\t", NTHREADS);
 	printf("%.5f\n", 1000*(double)(t1-t0)/CLOCKS_PER_SEC);
 
 	liberar_imagem(&entrada);
