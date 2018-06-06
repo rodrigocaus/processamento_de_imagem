@@ -36,7 +36,7 @@ imagem inicializa_saida(imagem *I) {
 	return saida;
 }
 
-void aplica_filtro(imagem *I, imagem *O, float **filtro, int ordem) {
+void aplica_filtro_single(imagem *I, imagem *O, float **filtro, int ordem) {
 	
     //Temp Red, Temp Green e Temp Blue : Acumuladores usados durante a convolucao
     float tr, tg, tb;
@@ -44,10 +44,10 @@ void aplica_filtro(imagem *I, imagem *O, float **filtro, int ordem) {
     //Amplitude em pixels em relação ao atual em que a matriz de convolução tem efeito
     int amp = (int)(ordem/2);
 
-    //Percorre as colunas da imagem
+    //Percorre as linhas da imagem
     for(int y = 0 ; y < (I->height) ; y++)
     {
-        //Percorre as linhas da imagem
+        //Percorre as colunas da imagem
         for(int x = 0 ; x < (I->width) ; x++)
         {
 
@@ -56,50 +56,59 @@ void aplica_filtro(imagem *I, imagem *O, float **filtro, int ordem) {
             tb = 0;
 
             //Inicia o valor da convolucao para o pixel [y][x] atual
-            //"me" e "ne" índices esperados dos pixels de conv
-            //"mv" e "nv" índices verdadeiros dos pixels de conv
-            //Para repetir pixels na borda quando sai dos limites
-
-            for(int me = y-amp ; me <= y+amp ; me++)
+            //"mc" e "nc" índices da matriz que estao sendo multiplicados na conv
+         
+            //Percorre as linhas da matriz de convolucao
+            for(int m = 0 ; m < ordem ; m++)
             {
 
                 //Não é caso de borda
-                int mv = me;
+                int mc = y - amp + m;
 
                 //Fora do limite superior
-                if(me >= (I->height)) mv = ((I->height)-1);
+                if(mc >= (I->height)) mc = ((I->height)-1);
 
                 //Fora do limite inferior
-                if(me < 0) mv = 0;
+                if(mc < 0) mc = 0;
                 
-
-                for(int ne = x-amp ; ne <= x+amp ; ne++)
+                //Percorre as colunas da matriz de convolucao
+                for(int n = 0 ; n < ordem ; n++)
                 {
 
                     //Não é caso de borda
-                    int nv = ne;
+                    int nc = x - amp + n;
 
                     //Fora do limite direito
-                    if(ne >= (I->width)) nv = ((I->width)-1);
+                    if(nc >= (I->width)) nc = ((I->width)-1);
 
                     //Fora do limite esquerdo
-                    if(ne < 0) nv = 0;
+                    if(nc < 0) nc = 0;
 
                     //Realiza o produto entre o pixel tratado no momento da imagem e da matriz de conv
-
-                    tr = tr + ((I->r)[mv][nv] * filtro[][]);
-                    
-
+                    //Para cada uma das cores
+                    tr = tr + ((I->r)[mc][nc] * filtro[m][n]);
+                    tg = tg + ((I->g)[mc][nc] * filtro[m][n]);
+                    tb = tb + ((I->b)[mc][nc] * filtro[m][n]);
                 }
             }
 
+            //Verifica overflow
+            if(tr > 255) tr = 255;
+            if(tg > 255) tg = 255;
+            if(tb > 255) tb = 255;
+
+            //Verifica negativo
+            if(tr < 0) tr = 0;
+            if(tg < 0) tg = 0;
+            if(tb < 0) tb = 0;
+           
+            //Escreve na imagem de saida o valor calculado para o pixel
+            //Em cada uma das cores
             (O->r)[y][x] = tr;
             (O->g)[y][x] = tg;
             (O->b)[y][x] = tb;
         }
     }
-	
-
 
 	return;
 }
