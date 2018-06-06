@@ -39,7 +39,7 @@ imagem inicializa_saida(imagem *I) {
 
 void aplica_filtro_single(imagem *I, imagem *O, float **filtro, int ordem) {
 
-   
+
     //Temp Red, Temp Green e Temp Blue : Acumuladores usados durante a convolucao
     float tr, tg, tb;
 
@@ -239,7 +239,6 @@ void aplica_filtro_threading(imagem *I, imagem *O, float **filtro, int ordem, in
    	free(threads);
    	free(args);
 
-
     return;
 }
 
@@ -269,6 +268,22 @@ void cria_emboss(float ***filtro) {
 	(*filtro)[2][0] = (*filtro)[0][2] = 0;
 	(*filtro)[1][2] = 1;
 	(*filtro)[1][1] = (*filtro)[2][2] = 2;
+}
+
+void cria_edge_detection(float ***filtro, int ordem) {
+	(*filtro) = malloc(sizeof(float *) * ordem);
+	(*filtro)[0] = malloc(sizeof(float) * ordem * ordem);
+	for(int i = 0; i < ordem; i++)
+		(*filtro)[i] = (*(*filtro) + ordem*i);
+
+	for(int i = 0; i < ordem; i++) {
+		for(int j = 0; j < ordem; j++) {
+			if(i == ordem/2 && j == ordem/2)
+				(*filtro)[i][j] = (float)(ordem*ordem);
+			else
+				(*filtro)[i][j] = -1.0;
+		}
+	}
 }
 
 void limpa_filtro(float **filtro) {
