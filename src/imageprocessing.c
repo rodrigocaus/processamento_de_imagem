@@ -54,9 +54,10 @@ imagem abrir_imagem(char *nome_do_arquivo) {
       I.b[i] = (*(I.b) + x*i);
   }
 
-   for (int i=0; i<x; i++) {
-     for (int j=0; j <y; j++) {
-      FreeImage_GetPixelColor(bitmapIn, i, j, &color);
+   for (int i=0; i < y; i++) {
+     for (int j=0; j < x; j++) {
+      //pixel na posição (x,y) - x horizontal e y vertical
+      FreeImage_GetPixelColor(bitmapIn, j, i, &color);
 
       I.r[i][j] = color.rgbRed;
       I.g[i][j] = color.rgbGreen;
@@ -83,14 +84,14 @@ void salvar_imagem(char *nome_do_arquivo, imagem *I) {
   //printf("Salvando imagem %d por %d...\n", I->width, I->height);
   bitmapOut = FreeImage_Allocate(I->width, I->height, 24, 0, 0, 0);
 
-   for (int i=0; i<I->width; i++) {
-     for (int j=0; j<I->height; j++) {
+   for (int i=0; i<I->height; i++) {
+     for (int j=0; j<I->width; j++) {
 
       color.rgbRed = I->r[i][j];
       color.rgbGreen = I->g[i][j];
       color.rgbBlue = I->b[i][j];
 
-      FreeImage_SetPixelColor(bitmapOut, i, j, &color);
+      FreeImage_SetPixelColor(bitmapOut, j, i, &color);
     }
   }
 
