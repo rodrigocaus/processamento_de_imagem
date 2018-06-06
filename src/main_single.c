@@ -8,9 +8,11 @@
 #define ORDEM 3
 #define NTHREADS 1
 
-float blur[ORDEM][ORDEM] = {1.0/9.0, 1.0/9.0, 1.0/9.0,
-							1.0/9.0, 1.0/9.0, 1.0/9.0,
-							1.0/9.0, 1.0/9.0, 1.0/9.0};
+float blur[ORDEM][ORDEM] = {
+							{1.0/9.0, 1.0/9.0, 1.0/9.0},
+							{1.0/9.0, 1.0/9.0, 1.0/9.0},
+							{1.0/9.0, 1.0/9.0, 1.0/9.0}
+						   };
 
 int main(int argc, char **argv) {
 	if(argc < 3) {

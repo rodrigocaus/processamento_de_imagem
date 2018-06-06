@@ -38,6 +38,13 @@ imagem inicializa_saida(imagem *I) {
 
 void aplica_filtro_single(imagem *I, imagem *O, float **filtro, int ordem) {
 	
+    float blur[3][3] = {
+                            {1.0/9.0, 1.0/9.0, 1.0/9.0},
+                            {1.0/9.0, 1.0/9.0, 1.0/9.0},
+                            {1.0/9.0, 1.0/9.0, 1.0/9.0}
+                        };
+
+
     //Temp Red, Temp Green e Temp Blue : Acumuladores usados durante a convolucao
     float tr, tg, tb;
 
@@ -86,9 +93,9 @@ void aplica_filtro_single(imagem *I, imagem *O, float **filtro, int ordem) {
 
                     //Realiza o produto entre o pixel tratado no momento da imagem e da matriz de conv
                     //Para cada uma das cores
-                    tr = tr + ((I->r)[mc][nc] * filtro[m][n]);
-                    tg = tg + ((I->g)[mc][nc] * filtro[m][n]);
-                    tb = tb + ((I->b)[mc][nc] * filtro[m][n]);
+                    tr = tr + ((I->r)[mc][nc] * blur[m][n]);
+                    tg = tg + ((I->g)[mc][nc] * blur[m][n]);
+                    tb = tb + ((I->b)[mc][nc] * blur[m][n]);
                 }
             }
 
@@ -110,5 +117,14 @@ void aplica_filtro_single(imagem *I, imagem *O, float **filtro, int ordem) {
         }
     }
 
+
 	return;
+}
+
+
+void aplica_filtro_thread(imagem *I, imagem *O, float **filtro, int ordem, int n_thread) {
+    
+    
+
+    return;
 }
