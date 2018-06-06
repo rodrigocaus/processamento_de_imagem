@@ -32,11 +32,14 @@ int main(int argc, char **argv) {
 	salvar_imagem(argv[2], &saida);
 	t1 = clock();
 
-	printf("%s\t", argv[1]);
-	printf("%ux%u\t", entrada.width, entrada.height);
-	printf("%s\t", "Simples");
-	printf("%u\t", NTHREADS);
-	printf("%.5f\n", 1000*(double)(t1-t0)/CLOCKS_PER_SEC);
+	printf("%s \t\t", argv[1]);
+	printf("%ux%u \t\t", entrada.width, entrada.height);
+	printf("%s\t\t", "multithreads");
+	printf("%u\t\t", NTHREADS);
+	printf("%.2f\n", 1000*(double)(t1-t0)/CLOCKS_PER_SEC);
+
+	liberar_imagem(&entrada);
+	liberar_imagem(&saida);
 
 	return 0;
 }
