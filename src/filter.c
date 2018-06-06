@@ -92,6 +92,16 @@ void aplica_filtro(imagem *I, imagem *O, float **filtro, int ordem) {
                 }
             }
 
+            //Verifica overflow
+            if(tr > 255) tr = 255;
+            if(tg > 255) tg = 255;
+            if(tb > 255) tb = 255;
+
+            //Verifica negativo
+            if(tr < 0) tr = 0;
+            if(tg < 0) tg = 0;
+            if(tb < 0) tb = 0;
+           
             //Escreve na imagem de saida o valor calculado para o pixel
             //Em cada uma das cores
             (O->r)[y][x] = tr;
