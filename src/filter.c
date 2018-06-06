@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <pthread.h>
 
 #include "imageprocessing.h"
 #include "filter.h"
@@ -125,10 +126,10 @@ void aplica_filtro_single(imagem *I, imagem *O, float **filtro, int ordem) {
 void aplica_filtro_thread(imagem *I, imagem *O, float **filtro, int ordem, int n_thread) {
     
     //Aloca o vetor de threads
-   	pthread_t threads = (pthread_t *) malloc(sizeof(pthread_t) * n_thread);
+   	pthread_t * threads = (pthread_t *) malloc(sizeof(pthread_t) * n_thread);
 
    	//Aloca o vetor de ponteiros de struct de argumentos para as threads
-   	area_trab **args = malloc(sizeof (* area_trab) * n_thread);
+   	area_trab **args = malloc(sizeof (area_trab *) * n_thread);
 
    	int n_linhas = I->height;
    	int linha_ant = -1;
@@ -154,7 +155,7 @@ void aplica_filtro_thread(imagem *I, imagem *O, float **filtro, int ordem, int n
     	linha_ant = (args[i])->l_fim ;
 
     	//Cria a thread
-    	pthread_create(&threads[i], NULL, thread_worker, args[i]);
+    	//pthread_create(&threads[i], NULL, thread_worker, args[i]);
     }
 
     // Esperando threads

@@ -11,7 +11,7 @@ process:
 	gcc -I$(LIBRARY) $(SRC)main_process.c $(DEPENDENCY) -o main_process$(OUT) $(FLAGS)
 
 threading:
-	gcc -I$(LIBRARY) $(SRC)main_threading.c $(DEPENDENCY) -o main_threading$(OUT) $(FLAGS)
+	gcc -I$(LIBRARY) $(SRC)main_threading.c $(DEPENDENCY) -o main_threading$(OUT) $(FLAGS) -lpthread
 
 test: single process threading
 	sh test.sh
