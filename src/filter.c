@@ -38,7 +38,7 @@ imagem inicializa_saida(imagem *I) {
 }
 
 void aplica_filtro_single(imagem *I, imagem *O, float **filtro, int ordem) {
-	
+
     float blur[3][3] = {
                             {1.0/9.0, 1.0/9.0, 1.0/9.0},
                             {1.0/9.0, 1.0/9.0, 1.0/9.0},
@@ -65,7 +65,7 @@ void aplica_filtro_single(imagem *I, imagem *O, float **filtro, int ordem) {
 
             //Inicia o valor da convolucao para o pixel [y][x] atual
             //"mc" e "nc" índices da matriz que estao sendo multiplicados na conv
-         
+
             //Percorre as linhas da matriz de convolucao
             for(int m = 0 ; m < ordem ; m++)
             {
@@ -78,7 +78,7 @@ void aplica_filtro_single(imagem *I, imagem *O, float **filtro, int ordem) {
 
                 //Fora do limite inferior
                 if(mc < 0) mc = 0;
-                
+
                 //Percorre as colunas da matriz de convolucao
                 for(int n = 0 ; n < ordem ; n++)
                 {
@@ -109,7 +109,7 @@ void aplica_filtro_single(imagem *I, imagem *O, float **filtro, int ordem) {
             if(tr < 0) tr = 0;
             if(tg < 0) tg = 0;
             if(tb < 0) tb = 0;
-           
+
             //Escreve na imagem de saida o valor calculado para o pixel
             //Em cada uma das cores
             (O->r)[y][x] = tr;
@@ -124,7 +124,7 @@ void aplica_filtro_single(imagem *I, imagem *O, float **filtro, int ordem) {
 
 
 void aplica_filtro_thread(imagem *I, imagem *O, float **filtro, int ordem, int n_thread) {
-    
+
     //Aloca o vetor de threads
    	pthread_t * threads = (pthread_t *) malloc(sizeof(pthread_t) * n_thread);
 
@@ -159,7 +159,7 @@ void aplica_filtro_thread(imagem *I, imagem *O, float **filtro, int ordem, int n
     }
 
     // Esperando threads
-  	for (int i = 0; i < n_thread; i++) 
+  	for (int i = 0; i < n_thread; i++)
   	{
     	pthread_join(threads[i], NULL);
 	}
@@ -170,4 +170,31 @@ void aplica_filtro_thread(imagem *I, imagem *O, float **filtro, int ordem, int n
 
 
     return;
+}
+
+void cria_blur(float ***filtro, int ordem) {
+	(*filtro) = malloc(sizeof(float *) * ordem);
+	(*filtro)[0] = malloc(sizeof(float) * ordem * ordem);
+	for(int i = 0; i < ordem; i++)
+		(*filtro)[i] = (*(*filtro) + ordem*i);
+
+	for(int i = 0; i < ordem; i++)
+		for(int j = 0; j < ordem; j++)
+			(*filtro)[i][j] = 1.0/(float)(ordem*ordem);
+}
+
+void limpa_filtro(float **filtro) {
+	free(filtro[0]);
+	free(filtro);
+}
+
+void copia_imagem(imagem *I, imagem *O) {
+
+	for(int i = 0; i < I->height; i++) {
+		for(int j = 0; j < I->width; j++) {
+			O->r[i][j] = I->r[i][j];
+			O->g[i][j] = I->g[i][j];
+			O->b[i][j] = I->b[i][j];
+		}
+	}
 }
