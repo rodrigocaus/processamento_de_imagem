@@ -120,6 +120,10 @@ void *thread_worker(void * args)
 {
 	int l_ini = ((area_trab *) args)->l_ini;
 	int l_fim = ((area_trab *) args)->l_fim;
+	int ordem = ((area_trab *) args)->ordem;
+	imagem * I = ((area_trab *) args)->I;
+	imagem * O = ((area_trab *) args)->O;
+	float ** filtro = ((area_trab *) args)->filtro;
 
 	//Temp Red, Temp Green e Temp Blue : Acumuladores usados durante a convolucao
     float tr, tg, tb;
@@ -224,6 +228,11 @@ void aplica_filtro_threading(imagem *I, imagem *O, float **filtro, int ordem, in
 
     	//Atualiza a linha anterior
     	linha_ant = (args[i]).l_fim ;
+
+    	(args[i]).ordem = ordem;
+    	(args[i]).I = I;
+    	(args[i]).O = O;
+    	(args[i]).filtro = filtro;
 
     	//Cria a thread
     	pthread_create(&threads[i], NULL, thread_worker, &args[i]);

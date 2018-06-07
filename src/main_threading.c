@@ -6,7 +6,7 @@
 #include "filter.h"
 
 #define ORDEM 3
-#define NTHREADS 4
+#define NTHREADS 8
 
 int main(int argc, char **argv) {
 	float ** emboss;
@@ -25,9 +25,9 @@ int main(int argc, char **argv) {
 
 	clock_t t0, t1;
 	t0 = clock();
-
 	aplica_filtro_threading(&entrada, &saida, (float **)emboss, ORDEM , NTHREADS);
 	t1 = clock();
+
 	salvar_imagem(argv[2], &saida);
 	
 

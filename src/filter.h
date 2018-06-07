@@ -5,6 +5,10 @@
 typedef struct {
     unsigned int l_ini;
     unsigned int l_fim;
+    int ordem;
+    imagem * I;
+    imagem * O;
+    float ** filtro;
 } area_trab;
 
 imagem inicializa_saida(imagem *I);
