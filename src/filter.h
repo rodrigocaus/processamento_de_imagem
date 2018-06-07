@@ -31,7 +31,10 @@ void aplica_filtro_process(imagem *I, imagem *O, float **filtro, int ordem, int 
 //necessaria para ela e criam um filtro na ordem desejada
 void cria_blur(float ***filtro, int ordem);
 void cria_emboss(float ***filtro); //Cria apenas na ordem 3 (3x3)
+void cria_emboss_5(float ***filtro); //Cria apenas na ordem 5 (5x5)
 void cria_edge_detection(float ***filtro, int ordem);
+void cria_motion_blur(float ***filtro, int ordem);
+
 
 //Desaloca o filtro criado
 void limpa_filtro(float **filtro);

@@ -401,6 +401,21 @@ void cria_blur(float ***filtro, int ordem) {
 			(*filtro)[i][j] = 1.0/(float)(ordem*ordem);
 }
 
+void cria_motion_blur(float ***filtro, int ordem) {
+
+    (*filtro) = malloc(sizeof(float *) * ordem);
+    (*filtro)[0] = malloc(sizeof(float) * ordem * ordem);
+
+    for(int i = 0; i < ordem; i++)
+        (*filtro)[i] = (*(*filtro) + ordem*i);
+
+    for(int i = 0; i < ordem; i++)
+        for(int j = 0; j < ordem; j++)
+            if(i==j) {(*filtro)[i][j] = 1.0/(float)(ordem);}
+            else { (*filtro)[i][j] = 0.0;}
+}
+
+
 void cria_emboss(float ***filtro) {
 	//Apenas 3X3
 
@@ -412,6 +427,26 @@ void cria_emboss(float ***filtro) {
 	(*filtro)[0][0] = -2; (*filtro)[0][1] = -2; (*filtro)[0][2] = 0;
     (*filtro)[1][0] = -2; (*filtro)[1][1] = 2;  (*filtro)[1][2] = 1;
     (*filtro)[2][0] = 0;  (*filtro)[2][1] = 1;  (*filtro)[2][2] = 2;
+
+}
+
+void cria_emboss_5(float ***filtro) {
+    //Apenas 3X3
+
+    (*filtro) = malloc(sizeof(float *) * 5);
+    (*filtro)[0] = malloc(sizeof(float) * 25);
+    for(int i = 0; i < 5; i++)
+        (*filtro)[i] = (*(*filtro) + 5*i);
+
+    (*filtro)[0][0] = -3; (*filtro)[0][1] = -2; (*filtro)[0][2] = -1; (*filtro)[0][3] = -1; (*filtro)[0][4] = 0;
+
+    (*filtro)[1][0] = -2; (*filtro)[1][1] = -1;  (*filtro)[1][2] = -1; (*filtro)[1][3] = 0; (*filtro)[1][4] = 1;
+
+    (*filtro)[2][0] = -1;  (*filtro)[2][1] = -1;  (*filtro)[2][2] = 1; (*filtro)[2][3] = 1; (*filtro)[2][4] = 1;
+
+    (*filtro)[3][0] = -1;  (*filtro)[3][1] = 0;  (*filtro)[3][2] = 1; (*filtro)[3][3] = 1; (*filtro)[3][4] = 2;
+
+    (*filtro)[4][0] = 0;  (*filtro)[4][1] = 1;  (*filtro)[4][2] = 1; (*filtro)[4][3] = 2; (*filtro)[4][4] = 3;
 
 }
 

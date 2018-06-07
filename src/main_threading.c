@@ -10,7 +10,8 @@
 
 int main(int argc, char **argv) {
 
-	float ** emboss;
+	
+	float ** motion;
 	struct timespec t1, t2;
 	double duracao;
 
@@ -24,12 +25,15 @@ int main(int argc, char **argv) {
 		return 1;
 
 	saida = inicializa_saida(&entrada);
-	cria_emboss(&emboss);
+	//cria_emboss(&emboss);
+	cria_motion_blur(&motion , ORDEM);
 
 	//Inicio da medicao do tempo
 	clock_gettime(CLOCK_MONOTONIC, &t1);
 	//Aplicacao do filtro
-	aplica_filtro_threading(&entrada, &saida, (float **)emboss, ORDEM , NTHREADS);
+	//aplica_filtro_threading(&entrada, &saida, (float **)emboss, ORDEM , NTHREADS);
+	aplica_filtro_threading(&entrada, &saida, (float **)motion, ORDEM , NTHREADS);
+
 	//Fim da medicao do tempo
 	clock_gettime(CLOCK_MONOTONIC, &t2);
 
@@ -49,7 +53,8 @@ int main(int argc, char **argv) {
 
 	liberar_imagem(&entrada);
 	liberar_imagem(&saida);
-	limpa_filtro(emboss);
+	//limpa_filtro(emboss);
+	limpa_filtro(motion);
 
 	return 0;
 }

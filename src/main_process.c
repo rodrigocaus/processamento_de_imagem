@@ -5,7 +5,7 @@
 #include "imageprocessing.h"
 #include "filter.h"
 
-#define ORDEM 3
+#define ORDEM 5
 #define NPROS 8
 
 int main(int argc, char **argv) {
@@ -25,7 +25,7 @@ int main(int argc, char **argv) {
 		return 1;
 
 	saida = inicializa_saida_shared(&entrada);
-	cria_emboss(&emboss);
+	cria_emboss_5(&emboss);
 
 	//Inicio da medicao do tempo
 	clock_gettime(CLOCK_MONOTONIC, &t1);
