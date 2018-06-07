@@ -6,10 +6,11 @@
 #include "filter.h"
 
 #define ORDEM 3
-#define NTHREADS 1
+#define NTHREADS 4
 
 int main(int argc, char **argv) {
-	
+
+	float **emboss;
 	struct timespec t1, t2;
 	double duracao;
 
@@ -22,10 +23,11 @@ int main(int argc, char **argv) {
 	if(entrada.width == 0)
 		return 1;
 
-	saida = inicializa_saida(&entrada);
+	saida = inicializa_saida_shared(&entrada);
+	cria_emboss(&emboss);
 
 	clock_gettime(CLOCK_MONOTONIC, &t1);
-	// TODO aplicar o filtro
+	aplica_filtro_process(&entrada, &saida, (float **)emboss, ORDEM, NTHREADS);
 	clock_gettime(CLOCK_MONOTONIC, &t2);
 
 	salvar_imagem(argv[2], &saida);
@@ -41,7 +43,7 @@ int main(int argc, char **argv) {
 	printf("%f\n", duracao);
 
 	liberar_imagem(&entrada);
-	liberar_imagem(&saida);
+	liberar_imagem_shared(&saida);
 
 	return 0;
 }
