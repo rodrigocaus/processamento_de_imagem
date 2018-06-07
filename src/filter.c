@@ -160,6 +160,7 @@ void aplica_filtro_single(imagem *I, imagem *O, float **filtro, int ordem) {
 
 void *thread_worker(void * args)
 {
+    //Salva localmente os valores recebidos por argumento
 	int l_ini = ((area_trab *) args)->l_ini;
 	int l_fim = ((area_trab *) args)->l_fim;
 	int ordem = ((area_trab *) args)->ordem;
@@ -388,7 +389,8 @@ void aplica_filtro_process(imagem *I, imagem *O, float **filtro, int ordem, int 
 }
 
 void cria_blur(float ***filtro, int ordem) {
-	(*filtro) = malloc(sizeof(float *) * ordem);
+
+    (*filtro) = malloc(sizeof(float *) * ordem);
 	(*filtro)[0] = malloc(sizeof(float) * ordem * ordem);
 
 	for(int i = 0; i < ordem; i++)
@@ -407,11 +409,10 @@ void cria_emboss(float ***filtro) {
 	for(int i = 0; i < 3; i++)
 		(*filtro)[i] = (*(*filtro) + 3*i);
 
-	(*filtro)[0][0] = -2;
-	(*filtro)[0][1] = (*filtro)[1][0] = (*filtro)[2][1] = -1;
-	(*filtro)[2][0] = (*filtro)[0][2] = 0;
-	(*filtro)[1][2] = 1;
-	(*filtro)[1][1] = (*filtro)[2][2] = 2;
+	(*filtro)[0][0] = -2; (*filtro)[0][1] = -2; (*filtro)[0][2] = 0;
+    (*filtro)[1][0] = -2; (*filtro)[1][1] = 2;  (*filtro)[1][2] = 1;
+    (*filtro)[2][0] = 0;  (*filtro)[2][1] = 1;  (*filtro)[2][2] = 2;
+
 }
 
 void cria_edge_detection(float ***filtro, int ordem) {

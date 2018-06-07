@@ -26,12 +26,16 @@ int main(int argc, char **argv) {
 	saida = inicializa_saida(&entrada);
 	cria_emboss(&emboss);
 
+	//Inicio da medicao do tempo
 	clock_gettime(CLOCK_MONOTONIC, &t1);
+	//Aplicacao do filtro
 	aplica_filtro_threading(&entrada, &saida, (float **)emboss, ORDEM , NTHREADS);
+	//Fim da medicao do tempo
 	clock_gettime(CLOCK_MONOTONIC, &t2);
 
 	salvar_imagem(argv[2], &saida);
 
+	//Contabilizacao do tempo
 	duracao = (t2.tv_sec - t1.tv_sec);
 	duracao += (t2.tv_nsec - t1.tv_nsec) / 1000000000.0;
 

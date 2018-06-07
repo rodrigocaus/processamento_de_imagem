@@ -25,16 +25,18 @@ int main(int argc, char **argv) {
 		return 1;
 
 	saida = inicializa_saida(&entrada);
-
 	cria_emboss(&emboss);
 
-	
+	//Inicio da medicao de tempo
 	clock_gettime(CLOCK_MONOTONIC, &t1);
+	//Aplicacao do filtro
 	aplica_filtro_single(&entrada, &saida, (float **)emboss, ORDEM);
+	//Fim da contagem de tempo
 	clock_gettime(CLOCK_MONOTONIC, &t2);
 
 	salvar_imagem(argv[2], &saida);
 
+	//Diferenca de tempo
 	duracao = (t2.tv_sec - t1.tv_sec);
 	duracao += (t2.tv_nsec - t1.tv_nsec) / 1000000000.0;
 

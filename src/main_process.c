@@ -6,7 +6,7 @@
 #include "filter.h"
 
 #define ORDEM 3
-#define NTHREADS 4
+#define NPROS 8
 
 int main(int argc, char **argv) {
 
@@ -18,6 +18,7 @@ int main(int argc, char **argv) {
 		fprintf(stderr, "Faltam argumentos!\n");
 		return argc;
 	}
+	
 	imagem entrada, saida;
 	entrada = abrir_imagem(argv[1]);
 	if(entrada.width == 0)
@@ -26,19 +27,24 @@ int main(int argc, char **argv) {
 	saida = inicializa_saida_shared(&entrada);
 	cria_emboss(&emboss);
 
+	//Inicio da medicao do tempo
 	clock_gettime(CLOCK_MONOTONIC, &t1);
-	aplica_filtro_process(&entrada, &saida, (float **)emboss, ORDEM, NTHREADS);
+	//Aplicacao do filtro
+	aplica_filtro_process(&entrada, &saida, (float **)emboss, ORDEM, NPROS);
+	//Fim da medicao do tempo
 	clock_gettime(CLOCK_MONOTONIC, &t2);
 
 	salvar_imagem(argv[2], &saida);
 
+
+	//Contabilizacao do tempo
 	duracao = (t2.tv_sec - t1.tv_sec);
 	duracao += (t2.tv_nsec - t1.tv_nsec) / 1000000000.0;
 
 	printf("%s \t\t", argv[1]);
 	printf("%ux%u \t\t", entrada.width, entrada.height);
 	printf("%s \t\t", "multiprocessos");
-	printf("%u \t\t", NTHREADS);
+	printf("%u \t\t", NPROS);
 	printf("%u \t\t", ORDEM);
 	printf("%f\n", duracao);
 

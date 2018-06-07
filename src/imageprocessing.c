@@ -3,14 +3,7 @@
 #include <stdio.h>
 
 #include "imageprocessing.h"
-
 #include <FreeImage.h>
-
-/*
-imagem abrir_imagem(char *nome_do_arquivo);
-void salvar_imagem(char *nome_do_arquivo);
-void liberar_imagem(imagem *i);
- */
 
 imagem abrir_imagem(char *nome_do_arquivo) {
   FIBITMAP *bitmapIn;
@@ -56,7 +49,6 @@ imagem abrir_imagem(char *nome_do_arquivo) {
 
    for (int i=0; i < y; i++) {
      for (int j=0; j < x; j++) {
-      //pixel na posição (x,y) - x horizontal e y vertical
       FreeImage_GetPixelColor(bitmapIn, j, i, &color);
 
       I.r[i][j] = color.rgbRed;
@@ -81,7 +73,6 @@ void salvar_imagem(char *nome_do_arquivo, imagem *I) {
   FIBITMAP *bitmapOut;
   RGBQUAD color;
 
-  //printf("Salvando imagem %d por %d...\n", I->width, I->height);
   bitmapOut = FreeImage_Allocate(I->width, I->height, 24, 0, 0, 0);
 
    for (int i=0; i<I->height; i++) {
