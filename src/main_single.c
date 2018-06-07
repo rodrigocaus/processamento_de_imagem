@@ -11,8 +11,9 @@
 
 int main(int argc, char **argv) {
 
-	//float **blur;
 	float ** emboss;
+	struct timespec t1, t2;
+	double duracao;
 
 	if(argc < 3) {
 		fprintf(stderr, "Faltam argumentos!\n");
@@ -25,27 +26,27 @@ int main(int argc, char **argv) {
 
 	saida = inicializa_saida(&entrada);
 
-	//cria_blur(&blur, ORDEM);
 	cria_emboss(&emboss);
 
-	clock_t t0, t1;
-	t0 = clock();
-	//aplica_filtro_single(&entrada, &saida, (float **)blur, ORDEM);
+	
+	clock_gettime(CLOCK_MONOTONIC, &t1);
 	aplica_filtro_single(&entrada, &saida, (float **)emboss, ORDEM);
-	t1 = clock();
+	clock_gettime(CLOCK_MONOTONIC, &t2);
 
 	salvar_imagem(argv[2], &saida);
+
+	duracao = (t2.tv_sec - t1.tv_sec);
+	duracao += (t2.tv_nsec - t1.tv_nsec) / 1000000000.0;
 
 	printf("%s \t\t", argv[1]);
 	printf("%ux%u \t\t", entrada.width, entrada.height);
 	printf("%s \t\t", "single thread");
 	printf("%u \t\t", NTHREADS);
 	printf("%u \t\t", ORDEM);
-	printf("%.2f\n", 1000*(double)(t1-t0)/CLOCKS_PER_SEC);
+	printf("%f\n", duracao);
 
 	liberar_imagem(&entrada);
 	liberar_imagem(&saida);
-	//limpa_filtro(blur);
 	limpa_filtro(emboss);
 
 	return 0;
