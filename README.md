@@ -31,3 +31,5 @@ matriz de convolução e o tempo de operação sobre a imagem de entrada.
 
 Os procedimentos de abrir e salvar as imagens estão nos aquivos `imageprocessing`
 implementados pelo professor Tiago Tavares, com uso da biblioteca `FreeImage.h`.
+Os pacotes libfreeimage-dev e libfreeimage3 devem ser instalados para o funcionamento
+dos programas.
