@@ -36,7 +36,6 @@ int main(int argc, char **argv) {
 
 	salvar_imagem(argv[2], &saida);
 
-
 	//Contabilizacao do tempo
 	duracao = (t2.tv_sec - t1.tv_sec);
 	duracao += (t2.tv_nsec - t1.tv_nsec) / 1000000000.0;
@@ -50,6 +49,7 @@ int main(int argc, char **argv) {
 
 	liberar_imagem(&entrada);
 	liberar_imagem_shared(&saida);
+	limpa_filtro(emboss);
 
 	return 0;
 }

@@ -5,13 +5,12 @@
 #include "imageprocessing.h"
 #include "filter.h"
 
-#define ORDEM 3
+#define ORDEM 5
 #define NTHREADS 8
 
 int main(int argc, char **argv) {
-
 	
-	float ** motion;
+	float ** emboss;
 	struct timespec t1, t2;
 	double duracao;
 
@@ -19,21 +18,19 @@ int main(int argc, char **argv) {
 		fprintf(stderr, "Faltam argumentos!\n");
 		return argc;
 	}
+
 	imagem entrada, saida;
 	entrada = abrir_imagem(argv[1]);
 	if(entrada.width == 0)
 		return 1;
 
 	saida = inicializa_saida(&entrada);
-	//cria_emboss(&emboss);
-	cria_motion_blur(&motion , ORDEM);
+	cria_emboss_5(&emboss);
 
 	//Inicio da medicao do tempo
 	clock_gettime(CLOCK_MONOTONIC, &t1);
 	//Aplicacao do filtro
-	//aplica_filtro_threading(&entrada, &saida, (float **)emboss, ORDEM , NTHREADS);
-	aplica_filtro_threading(&entrada, &saida, (float **)motion, ORDEM , NTHREADS);
-
+	aplica_filtro_threading(&entrada, &saida, (float **)emboss, ORDEM , NTHREADS);
 	//Fim da medicao do tempo
 	clock_gettime(CLOCK_MONOTONIC, &t2);
 
@@ -42,7 +39,6 @@ int main(int argc, char **argv) {
 	//Contabilizacao do tempo
 	duracao = (t2.tv_sec - t1.tv_sec);
 	duracao += (t2.tv_nsec - t1.tv_nsec) / 1000000000.0;
-
 
 	printf("%s \t\t", argv[1]);
 	printf("%ux%u \t\t", entrada.width, entrada.height);
@@ -53,8 +49,7 @@ int main(int argc, char **argv) {
 
 	liberar_imagem(&entrada);
 	liberar_imagem(&saida);
-	//limpa_filtro(emboss);
-	limpa_filtro(motion);
-
+	limpa_filtro(emboss);
+	
 	return 0;
 }
