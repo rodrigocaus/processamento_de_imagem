@@ -9,7 +9,7 @@
 #define NTHREADS 8
 
 int main(int argc, char **argv) {
-	
+
 	float ** emboss;
 	struct timespec t1, t2;
 	double duracao;
@@ -29,7 +29,7 @@ int main(int argc, char **argv) {
 	clock_gettime(CLOCK_MONOTONIC, &t1);
 	aplica_filtro_threading(&entrada, &saida, (float **)emboss, ORDEM , NTHREADS);
 	clock_gettime(CLOCK_MONOTONIC, &t2);
-	
+
 	salvar_imagem(argv[2], &saida);
 
 	duracao = (t2.tv_sec - t1.tv_sec);
@@ -49,14 +49,3 @@ int main(int argc, char **argv) {
 
 	return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
