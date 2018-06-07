@@ -12,7 +12,7 @@ printf "Resolução\t\t"
 printf "Procedimento\t\t"
 printf "Numero de T/P\t\t"
 printf "Ordem da convolução\t\t"
-printf "Tempo de operação (ms)\n"
+printf "Tempo de operação (s)\n"
 
 for m in $(ls *.$EXTENSAO);
 do
