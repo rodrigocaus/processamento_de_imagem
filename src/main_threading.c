@@ -29,12 +29,13 @@ int main(int argc, char **argv) {
 	t1 = clock();
 
 	salvar_imagem(argv[2], &saida);
-	
+
 
 	printf("%s \t\t", argv[1]);
 	printf("%ux%u \t\t", entrada.width, entrada.height);
-	printf("%s\t\t", "multithreads");
-	printf("%u\t\t", NTHREADS);
+	printf("%s \t\t", "multithreads");
+	printf("%u \t\t", NTHREADS);
+	printf("%u \t\t", ORDEM);
 	printf("%.2f\n", 1000*(double)(t1-t0)/CLOCKS_PER_SEC);
 
 	liberar_imagem(&entrada);

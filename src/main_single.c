@@ -38,8 +38,9 @@ int main(int argc, char **argv) {
 
 	printf("%s \t\t", argv[1]);
 	printf("%ux%u \t\t", entrada.width, entrada.height);
-	printf("%s\t\t", "single thread");
-	printf("%u\t\t", NTHREADS);
+	printf("%s \t\t", "single thread");
+	printf("%u \t\t", NTHREADS);
+	printf("%u \t\t", ORDEM);
 	printf("%.2f\n", 1000*(double)(t1-t0)/CLOCKS_PER_SEC);
 
 	liberar_imagem(&entrada);

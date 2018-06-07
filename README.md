@@ -24,8 +24,8 @@ make test
 ```
 
 A saída é o nome do arquivo de entrada, sua resolução, o
-procedimento empregado, número de threads/processos e o tempo
-de operação sobre a imagem de entrada.
+procedimento empregado, número de threads/processos, ordem da
+matriz de convolução e o tempo de operação sobre a imagem de entrada.
 
 ## Processamento de imagem
 

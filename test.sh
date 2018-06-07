@@ -11,6 +11,7 @@ printf "Entrada\t\t"
 printf "Resolução\t\t"
 printf "Procedimento\t\t"
 printf "Numero de T/P\t\t"
+printf "Ordem da convolução\t\t"
 printf "Tempo de operação (ms)\n"
 
 for m in $(ls *.$EXTENSAO);

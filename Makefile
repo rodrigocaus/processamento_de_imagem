@@ -4,6 +4,8 @@ DEPENDENCY = $(SRC)imageprocessing.c $(SRC)filter.c
 LIBRARY = $(SRC).
 FLAGS = -lfreeimage -lpthread
 
+all: single process threading
+
 single:
 	gcc -I$(LIBRARY) $(SRC)main_single.c $(DEPENDENCY) -o main_single$(OUT) $(FLAGS)
 
